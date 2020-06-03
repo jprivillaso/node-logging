@@ -1,22 +1,30 @@
+interface LogEntry {
+  timestamp: number;
+  value: number;
+}
+
 class Logger {
-  private _log: Map<string, Map<number, number>>;
+  private _log: Map<string, LogEntry[]>;
 
   constructor() {
-    this._log = new Map<string, Map<number, number>>();
+    this._log = new Map<string, LogEntry[]>();
   }
 
   public add({ key, value }: { key: string, value: number}) {
-    const currentValue: Map<number, number> =
-      this._log.get(key) || new Map<number, number>();
+    const currentValue: LogEntry[] = this._log.get(key) || [];
 
-    const currentDate = new Date().valueOf();
-    currentValue.set(currentDate, value);
+    const timestamp = new Date().valueOf();
+    currentValue.push({
+      timestamp,
+      value: Math.round(value)
+    });
+
     this._log.set(key, currentValue);
   }
 
   public getSum(key: string) {
-    // return this._log.get(key)?.reduce((a: number, b: number) => a + b, 0) ?? 0;
-    return 0;
+    const currentValues = this._log.get(key)?.map(v => v.value) ?? [];
+    return currentValues.reduce((a: number, b: number) => a + b, 0) ?? 0;
   }
 }
 

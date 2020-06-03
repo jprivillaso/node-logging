@@ -28,8 +28,8 @@ export default (app: Application) => {
       const { value } = req.body;
 
       if (
-        validatePostParameters(key) &&
-        validatePostBody(value)
+        !validatePostParameters(key) ||
+        !validatePostBody(value)
       ) {
         res.status(HTTP_BAD_REQUEST).json({
           message: MALFORMED_REQUEST
@@ -37,7 +37,7 @@ export default (app: Application) => {
       }
 
       addMetric(key, value);
-      console.log(`Metric [ ${key} ] registered successfully!`);
+      console.log(`Metric [ ${key} - ${value} ] registered successfully!`);
 
       res.status(HTTP_SUCCESS).json({});
     } catch (error) {
