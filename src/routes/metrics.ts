@@ -22,7 +22,7 @@ function validatePostBody(value: MetricBody) {
 }
 
 export default (app: Application) => {
-  app.post('/metric/:key', (req: Request,res: Response ) => {
+  app.post('/metric/:key', (req: Request, res: Response ) => {
     try {
       const { key } = req.params;
       const { value } = req.body;
