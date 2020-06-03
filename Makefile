@@ -15,7 +15,7 @@ help: ## This help.
 .DEFAULT_GOAL := help
 
 start:
-	docker-compose up
+	docker-compose up -d
 
 build: ## Build the container
 	docker build -t app:latest .
