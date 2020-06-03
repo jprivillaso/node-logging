@@ -4,22 +4,19 @@ import {
   Response
 } from 'express';
 
-import { addMetric, getSum } from '../services/aggreator';
+import { addMetric, getSum } from '../services/logger';
+
 import {
   MALFORMED_REQUEST,
   HTTP_BAD_REQUEST,
   HTTP_SUCCESS,
   HTTP_INTERNAL_ERROR
 } from '../commons/constants';
-import { MetricBody } from '../commons/types';
 
-function validatePostParameters(key: string) {
-  return key && typeof key === 'string';
-}
-
-function validatePostBody(value: MetricBody) {
-  return value && typeof value === 'number';
-}
+import {
+  validatePathParameters,
+  validatePostBody
+} from '../commons/validation';
 
 export default (app: Application) => {
   app.post('/metric/:key', (req: Request, res: Response ) => {
@@ -28,7 +25,7 @@ export default (app: Application) => {
       const { value } = req.body;
 
       if (
-        !validatePostParameters(key) ||
+        !validatePathParameters(key) ||
         !validatePostBody(value)
       ) {
         res.status(HTTP_BAD_REQUEST).json({
@@ -48,7 +45,22 @@ export default (app: Application) => {
   });
 
   app.get('/metric/:key/sum', (req: Request,res: Response ) => {
-    const { key } = req.params;
-    res.send(`The current sum for the metric [ ${key} ] is: ${getSum(key)}`);
+    try {
+      const { key } = req.params;
+
+      if (!validatePathParameters(key)) {
+        res.status(HTTP_BAD_REQUEST).json({
+          message: MALFORMED_REQUEST
+        });
+      }
+
+      res.status(HTTP_SUCCESS).json({
+        value: getSum(key)
+      });
+    } catch (error) {
+      res.status(HTTP_INTERNAL_ERROR).json({
+        message: error
+      });
+    }
   });
 }

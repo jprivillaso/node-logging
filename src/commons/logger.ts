@@ -1,7 +1,4 @@
-interface LogEntry {
-  timestamp: number;
-  value: number;
-}
+import { LogEntry, AddLogEntry } from "./types";
 
 class Logger {
   private _log: Map<string, LogEntry[]>;
@@ -10,17 +7,8 @@ class Logger {
     this._log = new Map<string, LogEntry[]>();
   }
 
-  public add({ key, value }: { key: string, value: number}) {
+  public add({ key, value, timestamp }: AddLogEntry) {
     const currentValues: LogEntry[] = this._log.get(key) || [];
-
-    const timestamp = new Date().valueOf();
-    const oneHourAgo = timestamp - 3.6e6;
-
-    // Discard values before one hour
-    const oldestValue = currentValues.findIndex((t: LogEntry) => t.timestamp >= oneHourAgo);
-    currentValues.splice(oldestValue);
-
-    // Add new value and update the array
     currentValues.push({
       timestamp,
       value: Math.round(value)
@@ -28,9 +16,22 @@ class Logger {
     this._log.set(key, currentValues);
   }
 
-  public getSum(key: string) {
-    let currentValues = this._log.get(key)?.map(e => e.value) ?? [];
-    return currentValues.reduce((a: number, b: number) => a + b, 0) ?? 0;
+  public getSum(key: string, timestamp: number) {
+    let currentValues = this._log.get(key) ?? [];
+
+    // Discard values before one hour
+    const oneHourAgo = timestamp - 3.6e6;
+    const oldestValueIndex = currentValues.findIndex(
+      (t: LogEntry) => t.timestamp >= oneHourAgo - 1
+    );
+    currentValues = currentValues.slice(oldestValueIndex);
+
+    // Update again the log without the old values
+    this._log.set(key, currentValues);
+
+    return currentValues
+      .map(i => i.value)
+      .reduce((a: number, b: number) => a + b, 0) ?? 0;
   }
 }
 
