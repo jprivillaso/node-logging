@@ -21,4 +21,4 @@ build: ## Build the container
 	docker build -t app:latest .
 
 run: ## run single container
-	docker run --name app -d -p 4000:4000 app
+	docker run --name app -d -e PORT=4000 -p 4000:4000 app

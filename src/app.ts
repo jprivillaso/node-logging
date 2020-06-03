@@ -1,30 +1,38 @@
 import express, {
   Application,
-  Request,
-  Response
 } from 'express';
+
 import bodyParser from 'body-parser';
-import { addMetric, getSum } from './services/aggreator';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
+import morgan from 'morgan';
+import compression from 'compression';
+
+import config from './config/config';
+import MetricRoutes from './routes/metrics';
 
 const app : Application = express();
+
+// log all requests
+app.use(morgan('combined'));
+
+// support json and url encoded requests
+app.use(bodyParser.urlencoded(config.bodyParser));
+app.use(bodyParser.json(config.bodyParser));
+app.use(bodyParser.raw(config.bodyParser));
+app.use(compression());
+
+// setup encrypted session cookies
+app.use(cookieParser());
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.post('/metric/:key', (req: Request,res: Response ) => {
-  const { key } = req.params;
-  addMetric(key);
-  res.send(`received key ${key}`);
-});
+// register routes
+MetricRoutes(app);
 
-console.log('new str');
-
-app.get('/metric/:key/sum', (req: Request,res: Response ) => {
-  const { key } = req.params;
-  res.send(`the sum for the key ${key} is ${getSum()}`);
-});
-
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT;
 
 app.listen(PORT, () => {
   console.log(`server is running on PORT ${PORT}`);

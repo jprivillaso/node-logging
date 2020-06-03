@@ -9,5 +9,6 @@ services:
       dockerfile: Dockerfile
     environment:
       ENV_NAME: dev
+      PORT: 4000
     ports:
       - 4000:4000
