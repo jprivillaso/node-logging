@@ -22,7 +22,7 @@ class Logger {
     // Discard values before one hour
     const oneHourAgo = timestamp - 3.6e6;
     const oldestValueIndex = currentValues.findIndex(
-      (t: LogEntry) => t.timestamp >= oneHourAgo - 1
+      (t: LogEntry) => t.timestamp >= oneHourAgo
     );
     currentValues = currentValues.slice(oldestValueIndex);
 
