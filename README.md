@@ -16,6 +16,8 @@ The API has two methods
 }
 ```
 
+[Live DEMO](https://node-logging.netlify.app/.netlify/functions/lambda?key=test)
+
 This endpoint retrieves the last hour aggregated sum for the corresponding key.
 
 - **POST** /metric/{key}
@@ -29,6 +31,16 @@ This endpoint retrieves the last hour aggregated sum for the corresponding key.
 ```
 
 This endpoint stores a value for the corresponding metric.
+
+Try executing this on your terminal:
+
+```bash
+curl \
+  --header "Content-Type: application/json" \
+  --request POST \
+  --data '{"value":"20"}' \
+  https://node-logging.netlify.app/.netlify/functions/lambda?key=test
+```
 
 ## HTTP Response
 
