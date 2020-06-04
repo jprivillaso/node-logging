@@ -10,7 +10,15 @@ The API has two methods
 
 **URL:** /metric/{key}
 
-*Response:*
+**Body:**
+
+```json
+{
+  "value": 400
+}
+```
+
+**Response:**
 
 ```json
 {}
@@ -22,7 +30,7 @@ This endpoint stores a value for the corresponding metric.
 
 **URL**: /metric/{key}/sum
 
-*Response:*
+**Response:**
 
 ```json
 {
@@ -39,6 +47,8 @@ If everything works successfully, the API returns a HTTP Status 200
 If any of the parameters is incorrect, the API returns a HTTP Status 400
 
 If something wrong happen at the server, the API returns a HTTP Status 500
+
+If you make a request using an unsupported HTTP method, the API returns a HTTP Status 405.
 
 ## 3. Tech Stack Used
 
@@ -71,7 +81,9 @@ Execute the following commands at the project's root folder.
 $ make start
 ```
 
-2. Run it using docker-compose command, directly.
+**OR**
+
+2. Run it using docker-compose command.
 
 ```bash
 $ docker-compose up -d
@@ -79,13 +91,13 @@ $ docker-compose up -d
 
 ### 4.2 Lambda
 
-In order to deploy this lambda into Netlify, you must execute the following command
+In order to deploy this lambda to Netlify, you must execute the following command
 
 ```
 $ netlify deploy
 ```
 
-Follow the instructions to connect it to your Netlify account.
+Follow the instructions to connect it to your Netlify's account.
 
 #### 4.2.1 Test Live Demo
 
