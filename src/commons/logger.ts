@@ -25,7 +25,7 @@ class Logger {
       (t: LogEntry) => t.timestamp >= oneHourAgo
     );
 
-    if (oldestValueIndex) {
+    if (oldestValueIndex === -1) {
       currentValues = [];
     } else {
       currentValues = currentValues.slice(oldestValueIndex);
