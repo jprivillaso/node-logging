@@ -2,7 +2,6 @@ import { addMetric, getSum } from "../services/logger";
 
 const handleGetRequest = (event: any) => {
   const { key } = event.queryStringParameters;
-  console.log('param: ', key);
   return getSum(key);
 };
 

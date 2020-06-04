@@ -26,7 +26,12 @@ class Logger {
     const oldestValueIndex = currentValues.findIndex(
       (t: LogEntry) => t.timestamp >= oneHourAgo
     );
-    currentValues = currentValues.slice(oldestValueIndex);
+
+    if (oldestValueIndex) {
+      currentValues = [];
+    } else {
+      currentValues = currentValues.slice(oldestValueIndex);
+    }
 
     // Update again the log without the old values
     this._log.set(key, currentValues);
