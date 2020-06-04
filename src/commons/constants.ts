@@ -1,4 +1,5 @@
 export const MALFORMED_REQUEST = 'Request parameters are invalid!';
+export const METHOD_NOT_ALLOWED = 'Method not allowed!';
 
 export const HTTP_BAD_REQUEST = 400;
 export const HTTP_SUCCESS = 200;
