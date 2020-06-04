@@ -51,9 +51,9 @@ There are two ways of executing the project.
 - Microservice way
 - Lambda way
 
-For the sake of demonstration, I added an additional layer that allows you to deploy the code as a lambda using Netlify.
+For the sake of demonstration, I added an additional layer that allows you to deploy the code as a lambda function using Netlify, but you can run it as a Docker container as well.
 
-### 4.1 Microservice setup
+### 4.1 Microservice
 
 In order to run this project locally, you need the following technologies/tools installed.
 
@@ -77,7 +77,17 @@ $ make start
 $ docker-compose up -d
 ```
 
-### 4.2 Lambda Setup
+### 4.2 Lambda
+
+In order to deploy this lambda into Netlify, you must execute the following command
+
+```
+$ netlify deploy
+```
+
+Follow the instructions to connect it to your Netlify account.
+
+#### 4.2.1 Test Live Demo
 
 Try executing this on your terminal:
 
