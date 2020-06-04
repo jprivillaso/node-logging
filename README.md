@@ -13,9 +13,7 @@ The API has two methods
 *Response:*
 
 ```json
-{
-  "value": 400
-}
+{}
 ```
 
 This endpoint stores a value for the corresponding metric.
