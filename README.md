@@ -6,20 +6,6 @@ Nodejs app that has an API to handle metric logs.
 
 The API has two methods
 
-- **/GET** /metric/{key}/sum
-
-*Response:*
-
-```json
-{
-  "value": 400
-}
-```
-
-[Live DEMO](https://node-logging.netlify.app/.netlify/functions/lambda?key=test)
-
-This endpoint retrieves the last hour aggregated sum for the corresponding key.
-
 - **POST** /metric/{key}
 
 *Response:*
@@ -41,6 +27,20 @@ curl \
   --data '{"value":"20"}' \
   https://node-logging.netlify.app/.netlify/functions/lambda?key=test
 ```
+
+- **/GET** /metric/{key}/sum
+
+*Response:*
+
+```json
+{
+  "value": 400
+}
+```
+
+[Verify it at the live DEMO](https://node-logging.netlify.app/.netlify/functions/lambda?key=test)
+
+This endpoint retrieves the last hour aggregated sum for the corresponding key.
 
 ## HTTP Response
 
