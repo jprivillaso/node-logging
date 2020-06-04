@@ -1,18 +1,15 @@
-import querystring from "querystring";
 import { addMetric, getSum } from "../services/logger";
 
 const handleGetRequest = (event: any) => {
   const { key } = event.queryStringParameters;
+  console.log('param: ', key);
   return getSum(key);
 };
 
 const handlePostRequest = (event: any): void => {
-  const body: any = querystring.parse(event.body);
   const { key } = event.queryStringParameters;
-
-  if (body.value && key) {
-    addMetric(key, body.value);
-  }
+  const body = JSON.parse(`${event.body}`);
+  addMetric(key, body.value);
 };
 
 exports.handler = async (event: any) => {
@@ -25,6 +22,7 @@ exports.handler = async (event: any) => {
         break;
       case 'POST':
         handlePostRequest(event);
+        break;
       default:
         return { statusCode: 405, body: "Method Not Allowed" };
     }

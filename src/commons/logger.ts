@@ -8,6 +8,7 @@ class Logger {
   }
 
   public add({ key, value, timestamp }: AddLogEntry) {
+    console.log('Add metric', key, value, timestamp);
     const currentValues: LogEntry[] = this._log.get(key) || [];
     currentValues.push({
       timestamp,
@@ -17,6 +18,7 @@ class Logger {
   }
 
   public getSum(key: string, timestamp: number) {
+    console.log('Get sum', key, timestamp);
     let currentValues = this._log.get(key) ?? [];
 
     // Discard values before one hour
