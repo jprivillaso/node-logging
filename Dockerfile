@@ -9,6 +9,8 @@ COPY package.json .
 # Install all Packages
 RUN npm install
 
+RUN npm install pm2 -g
+
 # Copy all other source code to work directory
 ADD . /usr/src/app
 

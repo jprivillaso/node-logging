@@ -1,6 +1,6 @@
 # Nodejs Logging Docker Container
 
-Nodejs app that has an API to handle metric logs.
+Nodejs app that has an API to handle metric logs. To see the live DEMO, please go to the section 4.2.1 under this document.
 
 ## 1. API Methods
 
@@ -39,6 +39,10 @@ This endpoint stores a value for the corresponding metric.
 ```
 
 This endpoint retrieves the last hour aggregated sum for the corresponding key.
+
+**Important:**
+
+Whenever you try to get the sum from a metric that hasn't been logged yet, the API will return 0.
 
 ## 2. API Response Status
 
